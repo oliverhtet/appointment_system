@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+
 use Illuminate\Support\ServiceProvider;
-use Service\API\Service;
+use Service\API\Service\Service;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(Service::class);
+        
+        $this->app->bind(\Service\API\Service::class);
     }
 
     /**

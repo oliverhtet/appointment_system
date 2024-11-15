@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\TokenRepository;
+use Service\API\Service;
 
 class AuthController extends Controller
 {
+    private $apiservice;
+
+    public function __construct(Service $apiservice)
+    {
+        $this->apiservice = $apiservice;
+    }
     public function register(Request $request)
     {
        
@@ -29,13 +36,8 @@ class AuthController extends Controller
             ], 422);
         }
 
+        $user = $this->apiservice->createRegister($request);
        
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'customer', 
-        ]);
 
        
         return response()->json([

@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Service\API\Service as APIService;
 
 class ServiceController extends Controller
 {
+    private $apiservice;
+
+    public function __construct(APIService $apiservice)
+    {
+        $this->apiservice = $apiservice;
+    }
     // Get all services
     public function index()
     {
-        $services = Service::all();
+        $services = $this->apiservice->getServiceAll();
         return response()->json($services);
     }
 
